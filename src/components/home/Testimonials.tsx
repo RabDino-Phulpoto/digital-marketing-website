@@ -5,13 +5,12 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-// 1. DUMMY DATA (Reliable Image Links)
+// 1. DUMMY DATA (Fixed Image Links)
 const testimonials = [
   {
     id: 1,
     name: "Akif M. Shaikh",
     role: "CEO, Waiiz and TechArabiya",
-    // Used a generic reliable avatar in case Unsplash fails
     image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200&h=200", 
     text: "We have engaged Digi Forum for more than 6 months now in many areas from Company Branding to Website Development. Digi Forum is a reliable, honest & trusted agency that delivers what they promise. It has been a real pleasure working with them.",
   },
@@ -19,7 +18,8 @@ const testimonials = [
     id: 2,
     name: "Sarah Jenkins",
     role: "Marketing Director, StyleHub",
-    image: "https://images.unsplash.com/photo-1573496359-7013119ac63b?auto=format&fit=crop&q=80&w=200&h=200",
+    // FIXED: Updated to a working URL to prevent 404 errors
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200",
     text: "The team at Digi Forum completely transformed our online presence. Their SEO strategies doubled our traffic in just 3 months. I highly recommend them to anyone looking for serious growth.",
   },
   {
@@ -64,7 +64,7 @@ const Testimonials = () => {
   // 3. ANIMATION VARIANTS
   const variants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 50 : -50, // Reduced distance for smoother feel
+      x: direction > 0 ? 50 : -50,
       opacity: 0,
       scale: 0.95,
     }),
@@ -108,10 +108,7 @@ const Testimonials = () => {
           
           <Quote className="absolute top-8 left-8 text-blue-100 h-16 w-16 -z-0 rotate-180" />
 
-          {/* THE FIX: CSS GRID STACK 
-              Instead of 'absolute', we use Grid to stack items.
-              This guarantees the container has height.
-          */}
+          {/* GRID STACK to prevent height collapse */}
           <div className="relative grid grid-cols-1 grid-rows-1 items-center justify-items-center w-full">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
@@ -140,10 +137,6 @@ const Testimonials = () => {
                     alt={testimonials[currentIndex].name}
                     fill
                     className="object-cover"
-                    // Add error handler fallback
-                    onError={(e) => {
-                      // fallback logic handled by Next.js mostly, but ensures no crash
-                    }}
                   />
                 </div>
 
