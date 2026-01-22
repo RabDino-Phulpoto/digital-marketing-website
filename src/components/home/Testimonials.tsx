@@ -1,11 +1,11 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-// 1. DUMMY DATA (Fixed Image Links)
+// 1. DUMMY DATA
 const testimonials = [
   {
     id: 1,
@@ -18,7 +18,6 @@ const testimonials = [
     id: 2,
     name: "Sarah Jenkins",
     role: "Marketing Director, StyleHub",
-    // FIXED: Updated to a working URL to prevent 404 errors
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200",
     text: "The team at Digi Forum completely transformed our online presence. Their SEO strategies doubled our traffic in just 3 months. I highly recommend them to anyone looking for serious growth.",
   },
@@ -61,8 +60,8 @@ const Testimonials = () => {
     setCurrentIndex(index);
   };
 
-  // 3. ANIMATION VARIANTS
-  const variants = {
+  // 3. ANIMATION VARIANTS (Fixed for TypeScript Build)
+  const variants: Variants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 50 : -50,
       opacity: 0,
@@ -73,7 +72,8 @@ const Testimonials = () => {
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
+        // "as const" fixes the build error!
+        x: { type: "spring" as const, stiffness: 300, damping: 30 },
         opacity: { duration: 0.2 },
       },
     },
@@ -108,7 +108,7 @@ const Testimonials = () => {
           
           <Quote className="absolute top-8 left-8 text-blue-100 h-16 w-16 -z-0 rotate-180" />
 
-          {/* GRID STACK to prevent height collapse */}
+          {/* GRID STACK */}
           <div className="relative grid grid-cols-1 grid-rows-1 items-center justify-items-center w-full">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
@@ -137,6 +137,7 @@ const Testimonials = () => {
                     alt={testimonials[currentIndex].name}
                     fill
                     className="object-cover"
+                    onError={(e) => {}}
                   />
                 </div>
 
