@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 const WhatsAppButton = () => {
   // 1. YOUR PHONE NUMBER HERE (Format: CountryCode + Number, no + or -)
   // Example for Pakistan: 923001234567
-  const phoneNumber = "923001234567"; 
+  const phoneNumber = "923003488181"; 
   
   // 2. The message the client sees when they open WhatsApp
   const message = "Hi Digi Forum! I found your website and want to discuss a project.";
